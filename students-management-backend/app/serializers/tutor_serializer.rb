@@ -1,3 +1,3 @@
 class TutorSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :name,:course
 end
