@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function Login({ setStudent }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
-  const handleSubmit = async (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    if (!username || !password) return;
-    setStudent({username: username, password: password});
-    navigate('/dashboard')
-    
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((student) => setStudent(student));
+      }
+    });
   }
 
   return (
